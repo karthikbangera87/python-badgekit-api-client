@@ -125,6 +125,7 @@ _path_order = (
         'evidence',
         'comment',
         'code',
+	        
         )
 
 
@@ -137,7 +138,7 @@ _possible_query_params = (
 
 
 def _api_plural(noun):
-    if noun not in ['evidence', 'claim', 'codes/random']:
+    if noun not in ['evidence', 'claim', 'codes/random','email']:
         return noun + 's'
     else:
         return noun
@@ -148,15 +149,22 @@ def _make_path(*args, **kwargs):
     Constructs URL paths such as 'systems/{system}/issuers/{issuer}.
     '''
     parts = []
+    is_email=False	
     for field in _path_order:
-        value = kwargs.get(field)
+  	value = kwargs.get(field)
         if value is None:
-            continue
-        parts.extend([_api_plural(field), value])
+        	continue
+    	parts.extend([_api_plural(field), value])
+    for arg in args: 
+    	if arg =='email':
+    		is_email=True
 
-    if args:
-        parts.extend(args)
-
+    if is_email==False:
+    	if args:
+        	parts.extend(args)
+    
+    else:
+	pass
     path = posixpath.join(*parts)
 
     # If the API ever supports duplicate parameters, we would need

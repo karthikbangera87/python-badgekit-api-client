@@ -48,7 +48,7 @@ class BKAPITest(unittest.TestCase):
 
         req = httpretty.last_request()
         self.assertEqual(req.path, '/systems/badgekit/badges')
-
+    
     @httpretty.activate
     def test_get(self):
         a = badgekit.BadgeKitAPI('http://example.com/', 'asdf')
